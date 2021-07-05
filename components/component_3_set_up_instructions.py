@@ -85,6 +85,7 @@ instructions_array = [
 keep_going = ""
 while keep_going != "xxx":
     instruction = game_mode("Have you played TIC TAC TOE before?:", instruction_list, "I am sorry wrong input, please try again")
+    instruction.lower()
     if instruction == "no":
         bluh()
     elif instruction == "yes":
