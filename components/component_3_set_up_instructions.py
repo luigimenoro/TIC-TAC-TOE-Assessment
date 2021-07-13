@@ -74,6 +74,19 @@ instructions_array = [
     """
     Each players will take turn to put their element to the grid.  
     The first player to have a consecutive element in a row win.
+    ____________________________________________________________
+
+    Just like this wins:
+             |     |     
+          0  |  X  |  0
+        _____|_____|_____
+             |     |     
+          X  |  X  |  0  
+        _____|_____|_____
+             |     |     
+          0  |  X  |  X  
+             |     |     
+
     """,
     """
     Have Fun…

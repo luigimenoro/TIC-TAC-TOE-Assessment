@@ -32,6 +32,19 @@ instructions_array = [
              |     |     
           7  |  8  |  9  
              |     |     
+   ___________________________      
+
+    Just like this wins:
+             |     |     
+          0  |  X  |  0
+        _____|_____|_____
+             |     |     
+          X  |  X  |  0  
+        _____|_____|_____
+             |     |     
+          0  |  X  |  X  
+             |     |     
+
     """,
     """
     Each players will take turn to put their element to the grid.  
@@ -122,7 +135,6 @@ def asking_name(n):
             elements.append(element)
 
         n += 1
-
 # Function for player vs player
 def player_vs_player():
     # asks both of the player for their names using the function called asking_name
