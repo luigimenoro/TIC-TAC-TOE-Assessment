@@ -1,22 +1,21 @@
 # Component 6 for TIC TAC TOE
-
-import os
+# To do:
 """
-to do
-1. Assigning user's element to their picked spot, checking if it works.
+1. Ask user where they want to put their element to the grid.
+2. Check if the user's response is valid, for example check if the response is withing the numbers 1-9
+3. And part of the checking is also to check if the spot is available or not,for example if their is a element in that spot.
+4. And if the response is invalid then ask them again.
+-------------------------------------------------------------------------------------------------------
+BUT IF IT IS VALID:
+1. Get the code from component six and assign the element to the table. 
 """
 
 
-
-#to ask for players name
-p1_name = input("Player 1 what is your name?")
-p2_name = input("Player 2 what is your name?")
-
-# array for the names
-names = [p1_name, p2_name]
-# This is to ask for players' element
+# This is to asking players for their own element
 p1_element = input("Player 1 what would your element be?")
 p2_element = input("Player 2 what would your element be?")
+
+possible_answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
 
@@ -44,17 +43,32 @@ def display_board(board):
             blankBoard = blankBoard.replace(str(i), ' ')
     print(blankBoard)
 
-# function for players to put their element  
+# check user's input
+
+
+# function for players to ask them where to put their own element
 def player_choice(board):
-    choice = input("Please select an empty space between 1 and 9 : ")
+    # this is the part where the the program asks the user where the want their element to be assaign in the grid
+    choice = int(input("Please select an empty space between 1 and 9 : "))
+    if choice < 1 or choice > 9:
+        choice = input("Pleasev try again, select an empty space between 1 and 9 ")
+
+    while not space_check(board, int(choice)):
+        choice = input("This space isn't free. Please choose between 1 and 9 : ")
     return choice
 
+# function to put player's element to their desired position, that was wasked on the function called "player_choice"
 def place_marker(board, marker, position):
     board[position] = marker
     return board
 
+# Function that checks if the board is already full which means that there are already no more open spots.
 def full_board_check(board):
     return len([x for x in board if x == '#']) == 1
+
+# function that checks if the space is free or if it is not.
+def space_check(board, position):
+    return board[position] == '#'
 
 
     

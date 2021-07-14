@@ -1,5 +1,6 @@
 # Component 4 for TIC TAC TOE
 '''
+To do:
 --------------------------------------------------------------------------------------------
 1.  Ask the player 1 for their name. Store the name into a variable called player_1name. 
 2. After asking player 1 for their name, used that name to ask for their preffered element that is going 
@@ -9,9 +10,7 @@ to be used throughout the game
 not then store the name to play_2name. 
 4. After asking player 2 for their name, used that name to ask for their preffered element. Check if the 
 element is not the same as player 1. If so, then ask them again until Player 2 enters a new element. 
-            to be used throughout the game
-3. Then ask player 2 for their name. Check if player 2's name is not the same as player1. If not then store the name to play_2name. 
-4. After asking player 2 for their name, used that name to ask for their preffered element. Check if the element is not the same as player 1. If so, then ask them again until Player 2 enters a new element. 
+to be used throughout the game
 ---------------------------------------------------------------------------------------------
 '''
 # array to put the players names and also to check.
@@ -56,7 +55,7 @@ asking_name(1)
 # to show the arary for component testing only
 #printing the array
 print("\n")
-print("The name array is: ")
+print("The name array is: ") 
 for i in names:
     print(i, end = ' ')
 
