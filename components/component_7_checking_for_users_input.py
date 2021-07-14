@@ -12,13 +12,13 @@ BUT IF IT IS VALID:
 
 
 # Asking for player 1 and player 2's names
-p1_name = input("Player 1 what is your name?")
-p2_name = input("Player 2 what is your name?")
+p1_name = input("Player 1 what is your name?: ")
+p2_name = input("Player 2 what is your name?: ")
 
-names = ["", p1_name, p2_name]
+names = [p1_name, p2_name]
 # This is to asking players for their own element
-p1_element = input("Player 1 what would your element be?")
-p2_element = input("Player 2 what would your element be?")
+p1_element = input("Player 1 what would your element be?: ")
+p2_element = input("Player 2 what would your element be?: ")
 
 
 possible_answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -55,10 +55,14 @@ def display_board(board):
 # function for players to ask them where to put their own element
 def player_choice(board):
     # this is the part where the the program asks the user where the want their element to be assaign in the grid
-    choice = int(input("Please select an empty space between 1 and 9 : "))
-    if choice < 1 or choice > 9:
-        choice = input("Pleasev try again, select an empty space between 1 and 9 ")
+    choice = input("Please select an empty space between 1 and 9 : ")
 
+    if choice == "":
+        choice = input("Not a valid response, select an empty space between 1 and 9: ")
+
+    elif int(choice) < 1 or int(choice) > 9:
+        choice = input("Please try again, select an empty space between 1 and 9 ")
+    
     while not space_check(board, int(choice)):
         choice = input("This space isn't free. Please choose between 1 and 9 : ")
     return choice
@@ -87,8 +91,11 @@ def main():
         i = 1
         players = [p1_element, p2_element]
         game_on = full_board_check(board)
+        n = 0 
         while not game_on:
-
+            # to print out the player who is supposed to be puttng their element
+            print("It is {} turn".format(names[n]))
+            # to ask where the player wants their element to be assigned to the board
             position = player_choice(board)
 
             if i % 2 == 0:
@@ -101,6 +108,11 @@ def main():
             display_board(board)
 
             i += 1
+            n += 1
+            # if n is now 2, change n to 1
+            if n == 2:
+                n = 0
+
 
 
 main()
