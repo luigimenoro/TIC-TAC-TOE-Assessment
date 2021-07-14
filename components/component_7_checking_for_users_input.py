@@ -56,13 +56,15 @@ def display_board(board):
 def player_choice(board):
     # this is the part where the the program asks the user where the want their element to be assaign in the grid
     choice = input("Please select an empty space between 1 and 9 : ")
-
-    if choice == "":
+    letter = choice.isalpha()
+    
+    
+    if choice == "" or letter == True:
         choice = input("Not a valid response, select an empty space between 1 and 9: ")
 
-    elif int(choice) < 1 or int(choice) > 9:
+    if int(choice) < 1 or int(choice) > 9:
         choice = input("Please try again, select an empty space between 1 and 9 ")
-    
+
     while not space_check(board, int(choice)):
         choice = input("This space isn't free. Please choose between 1 and 9 : ")
     return choice
@@ -83,8 +85,7 @@ def space_check(board, position):
 
     
 
-
- #main_routine:
+#main_routine:
 def main():
     board = ['#'] * 10
     while True:
