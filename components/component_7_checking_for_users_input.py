@@ -11,9 +11,15 @@ BUT IF IT IS VALID:
 """
 
 
+# Asking for player 1 and player 2's names
+p1_name = input("Player 1 what is your name?")
+p2_name = input("Player 2 what is your name?")
+
+names = ["", p1_name, p2_name]
 # This is to asking players for their own element
 p1_element = input("Player 1 what would your element be?")
 p2_element = input("Player 2 what would your element be?")
+
 
 possible_answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -82,6 +88,7 @@ def main():
         players = [p1_element, p2_element]
         game_on = full_board_check(board)
         while not game_on:
+
             position = player_choice(board)
 
             if i % 2 == 0:
