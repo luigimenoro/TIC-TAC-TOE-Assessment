@@ -21,7 +21,7 @@ p1_element = input("Player 1 what would your element be?: ")
 p2_element = input("Player 2 what would your element be?: ")
 
 
-possible_answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+possible_answers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
 
@@ -50,23 +50,34 @@ def display_board(board):
     print(blankBoard)
 
 # check user's input
+def game_mode(question, valid_lists, error):
 
+    valid = False
+    while not valid:
+
+        # asks the user for their game mode and put choice in lowercase
+        response = input(question).lower()
+
+        # iterates through list and if reponse is an item
+        # in the list (or the first letter of an item)
+        # full item is returned
+
+        for item in valid_lists:
+            if response == item[0] or response == item:
+                return item
+                print()
+        
+        # output error if item not in list
+        print(error)
+        print()
 
 # function for players to ask them where to put their own element
 def player_choice(board):
     # this is the part where the the program asks the user where the want their element to be assaign in the grid
-    choice = input("Please select an empty space between 1 and 9 : ")
-    letter = choice.isalpha()
-    
-    
-    if choice == "" or letter == True:
-        choice = input("Not a valid response, select an empty space between 1 and 9: ")
-
-    if int(choice) < 1 or int(choice) > 9:
-        choice = input("Please try again, select an empty space between 1 and 9 ")
+    choice = game_mode("Please select an empty space between 1 and 9 : ", possible_answers, "Wrong Input, please select an empty sapce between 1 and 9")
 
     while not space_check(board, int(choice)):
-        choice = input("This space isn't free. Please choose between 1 and 9 : ")
+        choice = game_mode("This space isn't free. Please choose between 1 and 9 : ",possible_answers, "Wrong Input, please select an empty sapce between 1 and 9")
     return choice
 
 # function to put player's element to their desired position, that was wasked on the function called "player_choice"
