@@ -1,16 +1,10 @@
-# Component 6 for TIC TAC TOE
+# Component 8 for TIC TAC TOE
 # To do:
 """
-1. Ask user where they want to put their element to the grid.
-2. Check if the user's response is valid, for example check if the response is withing the numbers 1-9
-3. And part of the checking is also to check if the spot is available or not,for example if their is a element in that spot.
-4. And if the response is invalid then ask them again.
--------------------------------------------------------------------------------------------------------
-BUT IF IT IS VALID:
-1. Get the code from component six and assign the element to the table. 
+1.  Make a function that checks if player (1 or 2) has won the game. 
+2.  Also check if their is a tie.
+3.  Get the code from component 7, this code is going to be pretty much be the whole player vs player mode
 """
-
-
 # Asking for player 1 and player 2's names
 p1_name = input("Player 1 what is your name?: ")
 p2_name = input("Player 2 what is your name?: ")
@@ -93,8 +87,33 @@ def full_board_check(board):
 def space_check(board, position):
     return board[position] == '#'
 
+# function that checks if a player wins
+def win_check(board, mark):
+    if board[1] == board[2] == board[3] == mark:
+        return True
+    if board[4] == board[5] == board[6] == mark:
+        return True
+    if board[7] == board[8] == board[9] == mark:
+        return True
+    if board[1] == board[4] == board[7] == mark:
+        return True
+    if board[2] == board[5] == board[8] == mark:
+        return True
+    if board[3] == board[6] == board[9] == mark:
+        return True
+    if board[1] == board[5] == board[9] == mark:
+        return True
+    if board[3] == board[5] == board[7] == mark:
+        return True
+    return False
 
-    
+# to ask the user if they want to play again, after they have finished a signle round of tictactoe.
+def replay():
+    playAgain = input("Do you want to play again (y/n) ? ")
+    if playAgain.lower() == 'y':
+        return True
+    if playAgain.lower() == 'n':
+        return False
 
 #main_routine:
 def main():
@@ -120,11 +139,34 @@ def main():
             display_board(board)
 
             i += 1
+
+            # to check if the player has win or not
+            if win_check(board, marker):
+                print("You won !")
+                break
+            game_on = full_board_check(board)
+
+           # to check if the player has win or not
+            if win_check(board, marker):
+                # to cangratulate the player who has won the round
+                print("Congratulations {} has won!".format(names[n]))
+                break
+            # if the gane has turn out as a tie, when game has finished and no one won, therefor it is going to be a tie
+            elif full_board_check(board):
+                print("Wonderful, it is a tie!!")
+            game_on = full_board_check(board)
+
+             # To call whose turn it is for the player
             n += 1
             # if n is now 2, change n to 1, this is for the name calling
             if n == 2:
                 n = 0
-
+        # to check if the user want to plau again or no
+        # if the user does not want to play again, it will end the program
+        if not replay():
+          break
 
 
 main()
+
+
