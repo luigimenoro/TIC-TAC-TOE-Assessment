@@ -45,7 +45,9 @@ def asking_name(n):
         # check if the user's input is not the same as the first user's input
         if n == 2 and element == elements[n - 2]:
             del elements[n - 1]
-
+             # if the input is the same then, the program asks the user to try again.
+            element = input("I am sorry {}, but that element has already been taken by {}. PLease choose again: ".format(names[n-1], names[n - 2]))
+            # when the user has finished entering their element. The program then appends it to the empty variable called elements
             elements.append(element)
         n += 1
 
