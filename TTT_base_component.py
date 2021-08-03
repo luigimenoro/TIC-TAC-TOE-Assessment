@@ -164,6 +164,23 @@ def getComputerMove(board, computerLetter, humanelement):
     # move on one of the sides
     return chooseRandomMove(board, [2, 4, 6, 8])
 
+# function for showing instruction one by one
+def instruction():
+    # to ask the user if they have played TIC TAC TOE before:
+    instruction = valid_input("Have you played TIC TAC TOE before?:", instructions_list, "I am sorry wrong input, please try again")
+
+    # to convert user's response to lower case in order
+    instruction.lower()
+    
+    # if user enters yes: this function will break and continue
+    if instruction == "no":
+    # to print the instructions, everytime the user presses enter, another set of instruction would be printed
+        print("Please enter to continue")
+        for n in instructions_array:
+                user_input =input("")
+                if user_input == "":
+                    print(n)
+
 # function that asks the human player for their names. It will alternately ask the user's name starting with player 1
 def asking_name(n, names, elements):
     while n != 3:
@@ -184,3 +201,112 @@ def asking_name(n, names, elements):
             # if the input is the same then, the program asks the user to try again.
             element = input("I am sorry {}, but that element has already been taken by {}. PLease choose again: ".format( names[n-1], names[n - 2])) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
+
+# a class for the different modes avaialbe in this program. There is a function for player vs player and also there is a function for comp_vs_player
+class modes:
+    def player_vs_player():
+        asking_name(1, names, elements)
+    def comp_vs_player():
+        player1_name = input("Choose a Name for player 1: "); names.append(player1_name)
+        p1_element = input("{} what would be your element?: ".format(player1_name)); elements.append(p1_element)
+        player2_name = "Computer"; names.append(player2_name)
+        p2_element = "B" ;  elements.append(p2_element)
+
+# Main routinem goes here
+def main():
+    # This section is for welcoming the user, it is going to call the txt file that consists the ascii art
+    print(''.join([line for line in f]))
+
+    # to ask the user if they have played the game before. if answer is yes, then it will, else it will show the instructions
+    instruction()
+
+     # Asks the user if they want to play either computer vs player or player vs player
+    print("\n")
+    choice = valid_input("Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player> \n", game_modes, "I am sorry this is not one of the modes. Please choose between <computer vs player> or <player vs player>")
+    
+    if choice== '1':
+        modes.player_vs_player()
+        player1_is_human = True
+        player2_is_human = True
+    elif choice == '2':
+        modes.comp_vs_player()
+        player1_is_human = True
+        player2_is_human = False
+
+    # Defining the players that are going to play the game. Player 2 can either be a computer or a human, that is why there is a variable called "player2_is_human"
+    player1 = Player(player1_is_human, elements[0], names[0])
+    player2 = Player(player2_is_human, elements[1], names[1])
+ 
+    board = ['#'] * 10
+    while True:
+        i = 1
+        n = 0
+        game_on = full_board_check(board)
+        display_board(board, elements[0], elements[1])
+        while not game_on:
+            # to print out the player who is supposed to be puttng their element
+            print("It is {} turn".format(names[n]))
+            # to ask where the player wants their element to be assigned to the board
+            if player1_is_human == True and player2_is_human == True:
+                position = player_choice(board)
+
+            if i % 2 == 0:
+                marker = elements[1]
+            else:
+                marker = elements[0]
+
+             # if user choose player vs computer
+            if player1_is_human == True and player2_is_human == False:
+                if marker == elements[0]:
+                    position = player_choice(board)
+                else:
+                    position = getComputerMove(board, elements[1], elements[0])
+
+            place_marker(board, marker, int(position))
+
+            display_board(board, elements[0], elements[1])
+
+            i += 1
+            # to check if the player has win or not
+            if choice == "2" and win_check(board, marker) == player2:
+                print("You lost, Computer won the game!")
+                break
+            elif win_check(board, marker):
+                print("Congratulations {} has won!".format(names[n]))
+                break
+            elif full_board_check(board):
+                print("Wonderful, it is a tie!!")
+            game_on = full_board_check(board)
+
+            # To call whose turn it is for the player
+            n += 1
+            # if n is now 2, change n to 1, this is for the name calling
+            if n == 2:
+                n = 0
+
+        # reloop the game
+        not_played_mode = played[int(choice) - 1]
+        mode_played = game_mode1[int(choice) - 1]
+
+        keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again")
+
+        if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1] :
+            modes.player_vs_player()
+            player1_is_human = True
+            player2_is_human = True
+         # if use picked 2:
+        elif keep_going1 == "2" and mode_played == game_mode1[1] or keep_going1 == "1" and not_played_mode == played[0]  :
+            modes.comp_vs_player()
+            player1_is_human = True
+            player2_is_human = False
+        elif keep_going1 == "3":
+            print("Thankyou for playing the game")
+            break
+        # Defining the players that are going to play the game. Player 2 can either be a computer or a human, that is why there is a variable called "player2_is_human"
+        player1 = Player(player1_is_human, elements[0], names[0])
+        player2 = Player(player2_is_human, elements[1], names[1])
+        board = ['#'] * 10
+
+if __name__ == '__main__':
+    main()
+ 
