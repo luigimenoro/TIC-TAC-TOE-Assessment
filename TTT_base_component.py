@@ -2,6 +2,7 @@
 import random
 from itertools import cycle
 from instruction import instructions_array
+import os
 
 # variables/arrays that are going to be called in this program
 possible_answers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] #/// an array/lists that are the valid response which are also going to used in the "valid_input" function which checks if the user's input is valid
@@ -12,7 +13,7 @@ names = [] # /// empty array to append the names of the user that are going to b
 elements = [] # /// empty array to append the chosen elements of the user that are going to be used in the game
 
 # Function for the board that is going to be used to display the 3 x 3 grid.
-def display_board(board, p1_element, p2_element):
+def display_board(board, p1_element, p2_element): 
     blankBoard = """
                                                                             +==========================+
                                                                             |        |        |        |
@@ -202,6 +203,11 @@ def asking_name(n, names, elements):
             element = input("I am sorry {}, but that element has already been taken by {}. PLease choose again: ".format( names[n-1], names[n - 2])) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
 
+# function that clears the terminal after the user entered their element to the 3 x 3 grid
+def clear():
+	os.system("cls")
+	print()
+
 # a class for the different modes avaialbe in this program. There is a function for player vs player and also there is a function for comp_vs_player
 class modes:
     def player_vs_player():
@@ -212,19 +218,17 @@ class modes:
         player2_name = "Computer"; names.append(player2_name)
         p2_element = "B" ;  elements.append(p2_element)
 
-# Main routinem goes here
+# Main routine goes here
 def main():
-    # This section is for welcoming the user, it is going to call the txt file that consists the ascii art
-    print(''.join([line for line in f]))
+    print(''.join([line for line in f])) # This section is for welcoming the user, it is going to call the txt file that consists the ascii art
 
-    # to ask the user if they have played the game before. if answer is yes, then it will, else it will show the instructions
-    instruction()
+    instruction()   # to ask the user if they have played the game before. if answer is yes, then it will, else it will show the instructions
 
-     # Asks the user if they want to play either computer vs player or player vs player
+    # Asks the user if they want to play either computer vs player or player vs player
     print("\n")
     choice = valid_input("Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player> \n", game_modes, "I am sorry this is not one of the modes. Please choose between <computer vs player> or <player vs player>")
     
-    if choice== '1':
+    if choice== '1':  
         modes.player_vs_player()
         player1_is_human = True
         player2_is_human = True
@@ -263,6 +267,8 @@ def main():
                     position = getComputerMove(board, elements[1], elements[0])
 
             place_marker(board, marker, int(position))
+
+            clear()
 
             display_board(board, elements[0], elements[1])
 
