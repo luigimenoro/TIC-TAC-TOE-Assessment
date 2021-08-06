@@ -13,7 +13,7 @@ instructions_array = [
     """,
     """
     To put your own element to the grids you need to enter the number that 
-    orresponds to the spot where you want the element to be entered.
+    corresponds to the spot where you want the element to be entered.
              |     |     
           1  |  2  |  3 
         _____|_____|_____
@@ -39,7 +39,7 @@ instructions_array = [
     """,
     """
     Each players will take turn to put their element to the grid.  
-    The first player to have a consecutive element in a row win.
+    The first player to have a consecutive element in a row wins.
     """,
     """
     Have Fun…
