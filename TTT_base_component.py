@@ -78,15 +78,6 @@ def win_check(board, mark):
     if board[3] == board[5] == board[7] == mark:
         return True
     return False
-
-# a class for the player's information in order to identify wether the user is a computer or a player:
-class Player:
-    def __init__(self, is_human, symbol, name):
-        self.is_human = is_human
-        self.symbol = symbol
-        self.name = name
-        self.score = 0
-
 # check user's input
 def valid_input(question, valid_lists, error):
     valid = False
@@ -245,10 +236,6 @@ def main():
         modes.comp_vs_player()
         player1_is_human = True
         player2_is_human = False
-
-    # Defining the players that are going to play the game. Player 2 can either be a computer or a human, that is why there is a variable called "player2_is_human"
-    player1 = Player(player1_is_human, elements[0], names[0])
-    player2 = Player(player2_is_human, elements[1], names[1])
  
     board = ['#'] * 10
     while True:
@@ -317,9 +304,7 @@ def main():
         elif keep_going1 == "3":
             print(color.CYAN + "Thankyou for playing the game" + color.END)
             break
-        # Defining the players that are going to play the game. Player 2 can either be a computer or a human, that is why there is a variable called "player2_is_human"
-        player1 = Player(player1_is_human, elements[0], names[0])
-        player2 = Player(player2_is_human, elements[1], names[1])
+
         board = ['#'] * 10
 
 if __name__ == '__main__':
