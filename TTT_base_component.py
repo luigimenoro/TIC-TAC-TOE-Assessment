@@ -3,6 +3,7 @@ import random
 from itertools import cycle
 from instruction import instructions_array
 import os
+from instruction import color
 
 # variables/arrays that are going to be called in this program
 possible_answers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] #/// an array/lists that are the valid response which are also going to used in the "valid_input" function which checks if the user's input is valid
@@ -104,7 +105,7 @@ def valid_input(question, valid_lists, error):
                 print()
 
         # output error if item not in list
-        print(error)
+        print(color.RED + str(error) + color.END)
         print()
 
 # function for players to ask them where to put their own element
@@ -114,10 +115,9 @@ def player_choice(board):
                        possible_answers, "Wrong Input, please select an empty sapce between 1 and 9")
 
     while not space_check(board, int(choice)):
-        choice = valid_input("This space isn't free. Please choose between 1 and 9 : ",
+        choice = valid_input(color.RED + "This space isn't free. Please choose between 1 and 9 : " + color.END,
                            possible_answers, "Wrong Input, please select an empty sapce between 1 and 9")
     return choice
-
 # The computer's move, which chooses a random number from the moves lists. This function is going to be used in the algorithm
 def chooseRandomMove(board, movesList):
     possibleMoves = []
@@ -168,7 +168,7 @@ def getComputerMove(board, computerLetter, humanelement):
 # function for showing instruction one by one
 def instruction():
     # to ask the user if they have played TIC TAC TOE before:
-    instruction = valid_input("Have you played TIC TAC TOE before?:", instructions_list, "I am sorry wrong input, please try again")
+    instruction = valid_input("Have you played my TIC TAC TOE before? <yes> or <no>:", instructions_list, "I am sorry wrong input, please try again")
 
     # to convert user's response to lower case in order
     instruction.lower()
@@ -192,7 +192,7 @@ def asking_name(n, names, elements):
         if n == 2 and name == names[n - 2]:
             del names[n - 1]
             # if the input is the same then, the program asks the user to try again.
-            name = input("I am sorry, but that name has already been taken.PLease choose again: ") ; names.append(name) # when the user has finished entering their name. The program then appends it to the empty variable called names
+            name = input(color.RED + "I am sorry, but that name has already been taken.Please choose again: " + color.END) ; names.append(name) # when the user has finished entering their name. The program then appends it to the empty variable called names
 
         # asks the user for their preffered element, and put their element to a variable called "elemenet"
         element = input("Hi {} I heard you were ready to play TIC TAC TOE. What would your element be?: ".format(names[n - 1])); elements.append(element)  # append or put the input to an empty array called names
@@ -200,7 +200,7 @@ def asking_name(n, names, elements):
         if n == 2 and element == elements[n - 2]:
             del elements[n - 1]
             # if the input is the same then, the program asks the user to try again.
-            element = input("I am sorry {}, but that element has already been taken by {}. PLease choose again: ".format( names[n-1], names[n - 2])) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
+            element = input(color.RED +"I am sorry {}, but that element has already been taken by {}. PLease choose again: " + color.END.format( names[n-1], names[n - 2])) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
 
 # function that clears the terminal after the user entered their element to the 3 x 3 grid
@@ -226,8 +226,17 @@ def main():
 
     # Asks the user if they want to play either computer vs player or player vs player
     print("\n")
-    choice = valid_input("Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player> \n", game_modes, "I am sorry this is not one of the modes. Please choose between <computer vs player> or <player vs player>")
-    
+    choice = valid_input(color.BOLD + "Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player>\n" + color.END, game_modes, "I am sorry this is not one of the modes. Please choose (1) for <computer vs player> or (2) for <player vs player>")
+
+    # to determine what mode the user have played or what mode has not played
+    not_played_mode = played[int(choice) - 1]
+    mode_played = game_mode1[int(choice) - 1]
+
+
+    # to clear the terminal
+    clear()
+
+    print(color.UNDERLINE + "You are going to play " + str(mode_played) + color.END)
     if choice== '1':  
         modes.player_vs_player()
         player1_is_human = True
@@ -249,7 +258,7 @@ def main():
         display_board(board, elements[0], elements[1])
         while not game_on:
             # to print out the player who is supposed to be puttng their element
-            print("It is {} turn".format(names[n]))
+            print(color.GREEN + "It is {}'s turn".format(names[n]) + color.END)
             # to ask where the player wants their element to be assigned to the board
             if player1_is_human == True and player2_is_human == True:
                 position = player_choice(board)
@@ -274,14 +283,14 @@ def main():
 
             i += 1
             # to check if the player has win or not
-            if choice == "2" and win_check(board, marker) == player2:
-                print("You lost, Computer won the game!")
+            if choice == "2" and win_check(board, marker) and marker == elements[1]:
+                print(color.RED + "You lost, Computer won the game!" + color.END)
                 break
             elif win_check(board, marker):
-                print("Congratulations {} has won!".format(names[n]))
+                print(color.YELLOW + "Congratulations {} has won!".format(names[n]) + color.END)
                 break
             elif full_board_check(board):
-                print("Wonderful, it is a tie!!")
+                print(color.PURPLE + "Wonderful, it is a tie!!" + color.END)
             game_on = full_board_check(board)
 
             # To call whose turn it is for the player
@@ -290,10 +299,10 @@ def main():
             if n == 2:
                 n = 0
 
-        # reloop the game
-        not_played_mode = played[int(choice) - 1]
-        mode_played = game_mode1[int(choice) - 1]
-
+        # deletes the element and name array for the reloop of the game
+        del elements[:]
+        del names[:]
+        # reloop the game   
         keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again")
 
         if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1] :
@@ -301,12 +310,12 @@ def main():
             player1_is_human = True
             player2_is_human = True
          # if use picked 2:
-        elif keep_going1 == "2" and mode_played == game_mode1[1] or keep_going1 == "1" and not_played_mode == played[0]  :
+        elif keep_going1 == "1" and mode_played == game_mode1[1] or keep_going1 == "2" and not_played_mode == played[0]  : 
             modes.comp_vs_player()
             player1_is_human = True
             player2_is_human = False
         elif keep_going1 == "3":
-            print("Thankyou for playing the game")
+            print(color.CYAN + "Thankyou for playing the game" + color.END)
             break
         # Defining the players that are going to play the game. Player 2 can either be a computer or a human, that is why there is a variable called "player2_is_human"
         player1 = Player(player1_is_human, elements[0], names[0])
