@@ -1,6 +1,5 @@
 # TIC TAC TOE base component, main component of the TIC TAC TOE game
-import random
-from itertools import cycle
+import random 
 from instruction import instructions_array
 import os
 from instruction import color
@@ -40,7 +39,7 @@ def display_board(board, p1_element, p2_element):
 
 # function for copying the board which is to going to be used for the main alogotrithm of the computer's move
 def getBoardCopy(board):
-    # make a duplicate of the board list and return it the duplicate.
+    # make a duplicate of the board list this is for the computer's algorithm
     dupeBoard = []
     for i in board:
         dupeBoard.append(i)
@@ -78,6 +77,7 @@ def win_check(board, mark):
     if board[3] == board[5] == board[7] == mark:
         return True
     return False
+
 # check user's input
 def valid_input(question, valid_lists, error):
     valid = False
@@ -201,11 +201,17 @@ def clear():
 
 # a class for the different modes avaialbe in this program. There is a function for player vs player and also there is a function for comp_vs_player
 class modes:
-    def player_vs_player():
+    def player_vs_player(): # function to asks for the element's of the two human players
         asking_name(1, names, elements)
     def comp_vs_player():
-        player1_name = input("Choose a name for player 1: "); names.append(player1_name)
-        p1_element = input("{} what would be your element? (consist of only one letter only and no numbers e.g <K> or <&>)): ".format(player1_name)); elements.append(p1_element)
+        player1_name = input("Choose a name for player 1: "); names.append(player1_name) # Asks the user for their name
+        p1_element = input("{} what would be your element? (must be only one letter only, and not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name)); elements.append(p1_element) # ask the user for their element
+
+        # if user enters a more than two letter for their element or a number or the same as Computer's element program will asks again.
+        while len(p1_element) > 1 or p1_element.isdigit() == True or p1_element.upper() == "B": 
+            del elements[0] # Deletes that appended element if the p1_element satisfies the expressions
+            p1_element = input( color.RED + "{} Invalid input (must be only one letter only. and not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name) + color.END); elements.append(p1_element) # asks the user again for their element
+        
         player2_name = "Computer"; names.append(player2_name)
         p2_element = "B" ;  elements.append(p2_element)
 
@@ -221,63 +227,65 @@ def main():
     choice = valid_input(color.BOLD + "Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player>\n" + color.END, game_modes, "I am sorry this is not one of the modes. Please choose (1) for <computer vs player> or (2) for <player vs player>")
 
     # to determine what mode the user have played or what mode has not played
-    not_played_mode = played[int(choice) - 1]
-    mode_played = game_mode1[int(choice) - 1]
+    not_played_mode = played[int(choice) - 1]  # Identifies which mode has been not played
+    mode_played = game_mode1[int(choice) - 1]  # Identifies which mode has been played
 
     clear() # to clear the terminal
 
-    print(color.UNDERLINE + "You are going to play " + str(mode_played) + color.END)
+    print(color.UNDERLINE + "You are going to play " + str(mode_played) + color.END) # To remind the user what mode they are playing, in case they have forgotten. This message will also be underlines to emphasize the message more
     if choice== '1':  
-        modes.player_vs_player()
-        player1_is_human = True
-        player2_is_human = True
+        modes.player_vs_player() # If player wants to play player vs player, it is going to call the function called player_vs_player in the class called mode
+        player1_is_human = True  #
+        player2_is_human = True  #  And since the user wants the play player vs player all the users would be human
     elif choice == '2':
-        modes.comp_vs_player()
-        player1_is_human = True
-        player2_is_human = False
-    clear()
- 
-    board = ['#'] * 10
+        modes.comp_vs_player() # If play wants to play computer vs player, it is the program will cal the function called comp_vs_player in the class called mode
+        player1_is_human = True  #
+        player2_is_human = False # And since the user wants to play computer vs player player 1 would be human, while player 2 would be not human or aka the Computer 
+
+    clear() # to clear the terminal
+    # Start of the while program for the tic tac toe game annd also for the reloop
+    board = ['#'] * 10  # to generate the board by using multiplying the "Free" spots by 10
     while True:
         i = 1
         n = 0
-        game_on = full_board_check(board)
-        display_board(board, elements[0], elements[1])
-        while not game_on:
-            # to print out the player who is supposed to be puttng their element
-            print(color.GREEN + "It is {}'s turn".format(names[n]) + color.END)
+        game_on = full_board_check(board) 
+        display_board(board, elements[0], elements[1]) # Displays the empty board before the user puts in their element
+
+        # The start of the proper game of tic tac toe
+        while not game_on:     
+            print(color.GREEN + "It is {}'s turn".format(names[n]) + color.END) # to print out the player who is supposed to be puttng their element
             # to ask where the player wants their element to be assigned to the board
             if player1_is_human == True and player2_is_human == True:
-                position = player_choice(board)
+                position = player_choice(board)                         # If player 1 is human and player 2 is human then asks the user where they want their element to be put in the grid
 
-            if i % 2 == 0:
+            if i % 2 == 0: # to change the players according to the i variable. If the "i" variable is an even number it will change the current player to the next player. 
                 marker = elements[1]
-            else:
-                marker = elements[0]
+            else:                        
+                marker = elements[0] 
 
              # if user choose player vs computer
-            if player1_is_human == True and player2_is_human == False:
-                if marker == elements[0]:
+            if player1_is_human == True and player2_is_human == False:  
+                if marker == elements[0]:          # if the marker is the human player, it will asks the user where they want their element to be put in the 3 x 3 grid
                     position = player_choice(board)
                 else:
-                    position = getComputerMove(board, elements[1], elements[0])
+                    position = getComputerMove(board, elements[1], elements[0])    # in order to get the position of the computer's element, computer's element would call the function named getComputerMove which is the main algorithm of the computer's move
 
-            place_marker(board, marker, int(position))
+            place_marker(board, marker, int(position))         # places the user or the computer's element on the 3 x 3 grid.
 
-            clear()
+            clear() # clears the terminal 
 
-            display_board(board, elements[0], elements[1])
+            display_board(board, elements[0], elements[1]) # updates the board everytime the user enetered their element
 
             i += 1
             # to check if the player has win or not
             if choice == "2" and win_check(board, marker) and marker == elements[1]:
-                print(color.RED + "You lost, Computer won the game!" + color.END)
+                print(color.RED + "You lost, Computer won the game!" + color.END)  # When the computer wins and the human loses, it will print the message that "you lost". And the whole message would be in red
                 break
             elif win_check(board, marker):
-                print(color.YELLOW + "Congratulations {} has won!".format(names[n]) + color.END)
+                print(color.YELLOW + "Congratulations {} has won!".format(names[n]) + color.END) # When the computer or the other human player loses, it will congratulate the player that won. And the whole message would be in yellow.
                 break
             elif full_board_check(board):
-                print(color.PURPLE + "Wonderful, it is a tie!!" + color.END)
+                print(color.PURPLE + "Wonderful, it is a tie!!" + color.END) # When the game turns out to be a tie, the program will say that it is a tie. And the whole message owuld be printed in purple to emphasize more. 
             game_on = full_board_check(board)
 
             # To call whose turn it is for the player
@@ -290,10 +298,10 @@ def main():
         del elements[:]
         del names[:]
         # reloop the game   
-        keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again")
+        keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again") # After each round finishes the program will ask the user if they want to play the game again
        
 
-        if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1] :
+        if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1] : # 
             modes.player_vs_player()
             player1_is_human = True
             player2_is_human = True
