@@ -188,10 +188,10 @@ def asking_name(n, names, elements):
         # asks the user for their preffered element, and put their element to a variable called "elemenet"
         element = input("Hi {} I heard you were ready to play TIC TAC TOE. What would your element be? (consist of only one letter only and no numbers e.g <K> or <&>)): ".format(names[n - 1])); elements.append(element)  # append or put the input to an empty array called names
         # check if the user's input is not the same as the first user's input
-        if n == 2 and element == elements[n - 2]:
+        if n == 2 and element == elements[n - 2] or element.isdigit() == True:
             del elements[n - 1]
             # if the input is the same then, the program asks the user to try again.
-            element = input(color.RED +"I am sorry " + str(names[n-1]) + ", but that element has already been taken by " + str(names[n - 2]) + ". PLease choose again: " + color.END) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
+            element = input(color.RED +"I am sorry " + str(names[n-1]) + ", but that element is either chosen or invalid. Please choose again: " + color.END) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
 
 # function that clears the terminal after the user entered their element to the 3 x 3 grid
@@ -210,7 +210,7 @@ class modes:
         # if user enters a more than two letter for their element or a number or the same as Computer's element program will asks again.
         while len(p1_element) > 1 or p1_element.isdigit() == True or p1_element.upper() == "B": 
             del elements[0] # Deletes that appended element if the p1_element satisfies the expressions
-            p1_element = input( color.RED + "{} Invalid input (must be only one letter only. and not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name) + color.END); elements.append(p1_element) # asks the user again for their element
+            p1_element = input( color.RED + "{} you have enetered an invalid input (must be only one letter only, not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name) + color.END); elements.append(p1_element) # asks the user again for their element
         
         player2_name = "Computer"; names.append(player2_name)
         p2_element = "B" ;  elements.append(p2_element)
@@ -224,7 +224,7 @@ def main():
 
     # Asks the user if they want to play either computer vs player or player vs player
     print("\n")
-    choice = valid_input(color.BOLD + "Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player>\n" + color.END, game_modes, "I am sorry this is not one of the modes. Please choose (1) for <computer vs player> or (2) for <player vs player>")
+    choice = valid_input(color.BOLD + "Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player>\n" + color.END, game_modes, "I am sorry this is not one of the modes. Please choose (1) for <player vs player> or (2) for <computer vs player>")
 
     # to determine what mode the user have played or what mode has not played
     not_played_mode = played[int(choice) - 1]  # Identifies which mode has been not played
@@ -233,7 +233,7 @@ def main():
     clear() # to clear the terminal
 
     print(color.UNDERLINE + "You are going to play " + str(mode_played) + color.END) # To remind the user what mode they are playing, in case they have forgotten. This message will also be underlines to emphasize the message more
-    if choice== '1':  
+    if choice == '1': 
         modes.player_vs_player() # If player wants to play player vs player, it is going to call the function called player_vs_player in the class called mode
         player1_is_human = True  #
         player2_is_human = True  #  And since the user wants the play player vs player all the users would be human
@@ -297,21 +297,22 @@ def main():
         # deletes the element and name array for the reloop of the game
         del elements[:]
         del names[:]
-        # reloop the game   
+        # reloop the game   # The below code means that, the program will ask the user if they want to play the game again, they have 3 choices, 1. To play the same mode they have played before. 2. To pay the other mode, for example if they have played computer vs player before, they are going to play player vs player. 3. the program will ask if they want to quit
         keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again") # After each round finishes the program will ask the user if they want to play the game again
        
 
-        if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1] : # 
-            modes.player_vs_player()
-            player1_is_human = True
+        if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1]:  # if user played player vs player in the previous round and want to play the same mode <or> if user did not played player vs player and they want to play player vs player
+            modes.player_vs_player()    # when each round finishes the program will ask the user if they want to play the game they have played or they want to play the mode they did not played.
+            player1_is_human = True    
             player2_is_human = True
          # if use picked 2:
-        elif keep_going1 == "1" and mode_played == game_mode1[1] or keep_going1 == "2" and not_played_mode == played[0]  : 
-            modes.comp_vs_player()
+        elif keep_going1 == "1" and mode_played == game_mode1[1] or keep_going1 == "2" and not_played_mode == played[0]: # if the user played computer vs computer in the previous round and want to play the same mode <or> if the user did not play computer vs player in the previous roudn and want to play the mode.
+            modes.comp_vs_player()     # when each round finished the program will ask the user if they want to play the mode that theyhave played or htey want to play the mode they did not played.
+            choice = "2"
             player1_is_human = True
             player2_is_human = False
         elif keep_going1 == "3":
-            print(color.CYAN + "Thankyou for playing the game" + color.END)
+            print(color.CYAN + "Thank you for playing the game" + color.END)
             break
         clear()
 

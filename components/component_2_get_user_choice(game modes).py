@@ -32,7 +32,7 @@ def game_mode(question, game_modes, error):
 
 
 # lists of valid responses
-game_modes = {"computer vs player", "player vs player", "xxx"}
+game_modes = ["1", "2", "xxx"]
 
 
 # main routine asks the user 
@@ -46,6 +46,10 @@ while keep_going != "xxx":
                             "I am sorry this is not one of the modes. Please choose between <computer vs player> or <player vs player>")
 
 
+    if keep_going == "1":
+        keep_going = "player vs player"
+    if keep_going == "2":
+        keep_going = "computer vs player"
     # Print the user's response for testing purposes only
     print("You are going to play {}".format(keep_going))
     
