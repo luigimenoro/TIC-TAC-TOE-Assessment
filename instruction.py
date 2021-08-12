@@ -1,7 +1,7 @@
 # array for the instructions
 instructions_array = [
     """
-    You are asked to enter you preferred symbol, and you 
+    You are asked to enter your preferred symbol, and you 
     are going to use that symbol throughout the game.
     """,
     """
@@ -44,7 +44,7 @@ instructions_array = [
     ___________________________________________________________
     """,
     """
-    Have Fun playing the game
+    Have fun playing the game
     """,
 ]
 
