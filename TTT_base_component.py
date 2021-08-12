@@ -151,7 +151,7 @@ def getComputerMove(board, computerLetter, humanelement):
     if choice != None:
         return choice
     # try to take the center, if it is free.
-    if space_check(board, 5) == "#":
+    if space_check(board, 5):
         return 5
     # move on one of the sides
     return chooseRandomMove(board, [2, 4, 6, 8])
