@@ -1,19 +1,20 @@
 # array for the instructions
 instructions_array = [
     """
-    You begin by entering your element, and you 
-    are going to use that element throughout the game.
+    You are asked to enter you preferred symbol, and you 
+    are going to use that symbol throughout the game.
     """,
     """
     Then the game will show a big 3 x 3 grid
     """,
     """
     Where it will ask you where you want to put your 
-    own element to the 3 x 3 grid. 
+    chosen symbol to the 3 x 3 grid. 
     """,
     """
-    To put your own element to the grids you need to enter the number that 
-    corresponds to the spot where you want the element to be entered.
+    To put your symbol to the 3 x 3 grid, you need to enter the number that 
+    corresponds to the spot where you want your symbol to be entered.
+    ---------------------------
              |     |     
           1  |  2  |  3 
         _____|_____|_____
@@ -22,8 +23,13 @@ instructions_array = [
         _____|_____|_____
              |     |     
           7  |  8  |  9  
-             |     |     
-   ___________________________      
+             |     |       
+    ---------------------------
+    """,
+    """
+    Each players will take turns putting their symbol to the grid.  
+    The first player to have a consecutive element in a row wins.
+    ___________________________________________________________
 
     Just like this wins:
              |     |     
@@ -34,15 +40,11 @@ instructions_array = [
         _____|_____|_____
              |     |     
           0  |  X  |  X  
-             |     |     
-
+             |     |    
+    ___________________________________________________________
     """,
     """
-    Each players will take turn to put their element to the grid.  
-    The first player to have a consecutive element in a row wins.
-    """,
-    """
-    Have Fun…
+    Have Fun playing the game
     """,
 ]
 

@@ -156,7 +156,12 @@ def getComputerMove(board, computerLetter, humanelement):
     # move on one of the sides
     return chooseRandomMove(board, [2, 4, 6, 8])
 
-# function for showing instruction one by one
+# function that clears the terminal after the user entered their element to the 3 x 3 grid
+def clear():
+	os.system("cls")
+	print()
+
+# function for printing instruction statements one by one
 def instruction():
     # to ask the user if they have played TIC TAC TOE before:
     instruction = valid_input( color.BOLD + "Have you played my TIC TAC TOE before? <yes> or <no>:" + color.END, instructions_list, "I am sorry wrong input, please try again")
@@ -172,6 +177,8 @@ def instruction():
                 user_input =input("")
                 if user_input == "":
                     print(n)
+                    
+        clear()
 
 # function that asks the human player for their names. It will alternately ask the user's name starting with player 1
 def asking_name(n, names, elements):
@@ -186,18 +193,14 @@ def asking_name(n, names, elements):
             name = input(color.RED + "I am sorry, but that name has already been taken. Please choose again: " + color.END) ; names.append(name) # when the user has finished entering their name. The program then appends it to the empty variable called names
 
         # asks the user for their preffered element, and put their element to a variable called "elemenet"
-        element = input("Hi {} I heard you were ready to play TIC TAC TOE. What would your element be? (consist of only one letter only and no numbers e.g <K> or <&>)): ".format(names[n - 1])); elements.append(element)  # append or put the input to an empty array called names
+        element = input("Hi {} I heard you were ready to play TIC TAC TOE. What would be your symbol? (consist of only one letter only and no numbers e.g <K> or <&>)): ".format(names[n - 1])); elements.append(element)  # append or put the input to an empty array called names
         # check if the user's input is not the same as the first user's input
-        if n == 2 and element == elements[n - 2] or element.isdigit() == True:
+        while n == 2 and element == elements[n - 2] or element.isdigit() == True or len(element) > 1:
             del elements[n - 1]
             # if the input is the same then, the program asks the user to try again.
-            element = input(color.RED +"I am sorry " + str(names[n-1]) + ", but that element is either chosen or invalid. Please choose again: " + color.END) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
+            element = input(color.RED +"I am sorry " + str(names[n-1]) + ", but your chosen symbol is either chosen or invalid. Please choose again: " + color.END) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
 
-# function that clears the terminal after the user entered their element to the 3 x 3 grid
-def clear():
-	os.system("cls")
-	print()
 
 # a class for the different modes avaialbe in this program. There is a function for player vs player and also there is a function for comp_vs_player
 class modes:
@@ -205,12 +208,12 @@ class modes:
         asking_name(1, names, elements)
     def comp_vs_player():
         player1_name = input("Choose a name for player 1: "); names.append(player1_name) # Asks the user for their name
-        p1_element = input("{} what would be your element? (must be only one letter only, and not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name)); elements.append(p1_element) # ask the user for their element
+        p1_element = input("{} what would your element be? (must be only one letter, not a number, and also not <B>. An example of a valid input would be <K> or <&>)): ".format(player1_name)); elements.append(p1_element) # ask the user for their element
 
         # if user enters a more than two letter for their element or a number or the same as Computer's element program will asks again.
         while len(p1_element) > 1 or p1_element.isdigit() == True or p1_element.upper() == "B": 
             del elements[0] # Deletes that appended element if the p1_element satisfies the expressions
-            p1_element = input( color.RED + "{} you have enetered an invalid input (must be only one letter only, not a number, and also not <B> e.g <K> or <&>)): ".format(player1_name) + color.END); elements.append(p1_element) # asks the user again for their element
+            p1_element = input( color.RED + "{} you have enetered an invalid input (must be only one letter only, not a number, and also not <B>. An example of a valid input would be <K> or <&>)): ".format(player1_name) + color.END); elements.append(p1_element) # asks the user again for their element
         
         player2_name = "Computer"; names.append(player2_name)
         p2_element = "B" ;  elements.append(p2_element)
@@ -222,6 +225,7 @@ def main():
 
     instruction()   # to ask the user if they have played the game before. if answer is yes, then it will, else it will show the instructions
 
+    clear() # clears the terminal
     # Asks the user if they want to play either computer vs player or player vs player
     print("\n")
     choice = valid_input(color.BOLD + "Hi user welcome to TIC TAC TOE which game mode do you want to play with.\n<(1). player vs player>\n<(2). computer vs player>\n" + color.END, game_modes, "I am sorry this is not one of the modes. Please choose (1) for <player vs player> or (2) for <computer vs player>")
@@ -270,7 +274,7 @@ def main():
                 else:
                     position = getComputerMove(board, elements[1], elements[0])    # in order to get the position of the computer's element, computer's element would call the function named getComputerMove which is the main algorithm of the computer's move
 
-            place_marker(board, marker, int(position))         # places the user or the computer's element on the 3 x 3 grid.
+            place_marker(board, marker, int(position))      # places the user or the computer's element on the 3 x 3 grid.
 
             clear() # clears the terminal 
 
