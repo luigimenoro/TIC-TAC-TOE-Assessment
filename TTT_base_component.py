@@ -15,26 +15,32 @@ elements = [] # /// empty array to append the chosen elements of the user that a
 # Function for the board that is going to be used to display the 3 x 3 grid.
 def display_board(board, p1_element, p2_element): 
     blankBoard = """
-                                                                            +==========================+
-                                                                            |        |        |        |
-                                                                            |   1    |   2    |   3    |
-                                                                            |        |        |        |
-                                                                            |--------------------------|
-                                                                            |        |        |        |
-                                                                            |   4    |   5    |   6    |
-                                                                            |        |        |        |
-                                                                            |--------------------------|
-                                                                            |        |        |        |
-                                                                            |   7    |   8    |   9    |
-                                                                            |        |        |        |
-                                                                            +==========================+
+                                                                        +======================================+
+                                                                        |            |            |            |
+                                                                        |            |            |            |
+                                                                        |     1      |     2      |     3      |
+                                                                        |            |            |            |
+                                                                        |            |            |            |
+                                                                        |--------------------------------------|
+                                                                        |            |            |            |
+                                                                        |            |            |            |       
+                                                                        |     4      |     5      |     6      |       
+                                                                        |            |            |            |       
+                                                                        |            |            |            |       
+                                                                        |--------------------------------------|       
+                                                                        |            |            |            |       
+                                                                        |            |            |            |       
+                                                                        |     7      |     8      |     9      |        
+                                                                        |            |            |            |       
+                                                                        |            |            |            |
+                                                                        +======================================+
  """
 
     for i in range(1, 10):
         if (board[i] == p1_element or board[i] == p2_element):
             blankBoard = blankBoard.replace(str(i), board[i])
         else:
-            blankBoard = blankBoard.replace(str(i), ' ')
+            blankBoard = blankBoard.replace(str(i), str(i))
     print(blankBoard)
 
 # function for copying the board which is to going to be used for the main alogotrithm of the computer's move
@@ -47,7 +53,7 @@ def getBoardCopy(board):
 
 # function to put player's element to their desired position, that was wasked on the function called "player_choice"
 def place_marker(board, marker, position):
-    board[position] = marker 
+    board[position] =  marker
     return board
 
 # Function that checks if the board is already full which means that there are already no more open spots.
@@ -278,7 +284,7 @@ def main():
 
             clear() # clears the terminal 
 
-            display_board(board, elements[0], elements[1]) # updates the board everytime the user enetered their element
+            display_board(board, elements[0], elements[1])  # updates the board everytime the user enetered their element 
 
             i += 1
             # to check if the player has win or not
