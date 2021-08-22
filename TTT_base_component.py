@@ -4,6 +4,7 @@ from instruction import instructions_array
 import os
 from instruction import color
 
+
 # variables/arrays that are going to be called in this program
 possible_answers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] #/// an array/lists that are the valid response which are also going to used in the "valid_input" function which checks if the user's input is valid
 instructions_list = ['yes', 'no'] ; game_modes = ["1", "2"] ; valid_response = ["1", "2", "3"] #/// an array/lists that are the valid response which are also going to used in the "valid_input" function which checks if the user's input is valid
@@ -40,7 +41,7 @@ def display_board(board, p1_element, p2_element):
         if (board[i] == p1_element or board[i] == p2_element):
             blankBoard = blankBoard.replace(str(i), board[i])
         else:
-            blankBoard = blankBoard.replace(str(i), str(i))
+            blankBoard = blankBoard.replace(str(i), (color.BOLD + str(i) + color.END))
     print(blankBoard)
 
 # function for copying the board which is to going to be used for the main alogotrithm of the computer's move
@@ -180,7 +181,7 @@ def instruction():
     # to print the instructions, everytime the user presses enter, another set of instruction would be printed
         print("Please enter to continue")
         for n in instructions_array:
-                user_input =input("")
+                user_input = input("") 
                 if user_input == "":
                     print(n)
                     
@@ -206,7 +207,6 @@ def asking_name(n, names, elements):
             # if the input is the same then, the program asks the user to try again.
             element = input(color.RED +"I am sorry " + str(names[n-1]) + ", but your chosen symbol is either chosen or invalid. Please choose again: " + color.END) ; elements.append(element) # when the user has finished entering their element. The program then appends it to the empty variable called elements
         n += 1
-
 
 # a class for the different modes avaialbe in this program. There is a function for player vs player and also there is a function for comp_vs_player
 class modes:
@@ -310,7 +310,6 @@ def main():
         # reloop the game   # The below code means that, the program will ask the user if they want to play the game again, they have 3 choices, 1. To play the same mode they have played before. 2. To pay the other mode, for example if they have played computer vs player before, they are going to play player vs player. 3. the program will ask if they want to quit
         keep_going1 = valid_input(" Would you like to play again? | <1> To play the same mode | <2> To play {} | <3> To quit |: ".format(not_played_mode), valid_response, "Invalid input please try again") # After each round finishes the program will ask the user if they want to play the game again
        
-
         if keep_going1 == '1' and mode_played == game_mode1[0] or keep_going1 == "2" and not_played_mode == played[1]:  # if user played player vs player in the previous round and want to play the same mode <or> if user did not played player vs player and they want to play player vs player
             modes.player_vs_player()    # when each round finishes the program will ask the user if they want to play the game they have played or they want to play the mode they did not played.
             player1_is_human = True    
